@@ -1,0 +1,30 @@
+{
+  "FileVersion": 3,
+  "Version": 1,
+  "VersionName": "0.1",
+  "FriendlyName": "MessagePack Plugin",
+  "Description": "Integrates the MessagePack serialization library.",
+  "Category": "Messaging",
+  "CreatedBy": "Your Name/Company",
+  "CreatedByURL": "",
+  "DocsURL": "",
+  "MarketplaceURL": "",
+  "SupportURL": "",
+  "CanContainContent": false,
+  "IsBetaVersion": true,
+  "IsExperimentalVersion": false,
+  "Installed": false,
+  "Modules": [
+    {
+      "Name": "MessagePackModule",
+      "Type": "Runtime",
+      "LoadingPhase": "Default"
+    }
+  ],
+  "Plugins": [
+    {
+      "Name": "EnhancedInput",
+      "Enabled": true
+    }
+  ]
+} 

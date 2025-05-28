@@ -1,0 +1,12 @@
+/Intermediate/
+/Saved/
+/Binary/
+/Build/
+Plugins/**/Intermediate/
+Plugins/**/Binary/
+Plugins/**/Saved/
+Binaries/
+
+/.idea
+
+.DS_Store
