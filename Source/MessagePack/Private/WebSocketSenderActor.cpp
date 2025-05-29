@@ -75,22 +75,6 @@ void AWebSocketSenderActor::OnMessageReceived(const FString& MessageString)
 	UE_LOG(LogTemp, Log, TEXT("WebSocket message received: %s"), *MessageString);
 }
 
-template<typename T>
-FGameMessage AWebSocketSenderActor::CreateGameMessageFromStruct(const T& StructData)
-{
-    FGameMessage MessageData;
-    MessageData.Id = FGuid::NewGuid().ToString();
-    
-    // Serialize the struct to binary
-    FMemoryWriter MemoryWriter(MessageData.Data, true);
-    MemoryWriter << StructData;
-    
-    // Create a descriptive message with the struct type name
-    MessageData.Message = FString::Printf(TEXT("Serialized %s"), *T::StaticStruct()->GetName());
-    
-    return MessageData;
-}
-
 FGameMessage AWebSocketSenderActor::CreateGameMessage()
 {
 	int32 RandomDataSize = FMath::RandRange(10, 50);
@@ -109,7 +93,6 @@ FGameMessage AWebSocketSenderActor::CreateGameMessage()
 	return MessageData;
 }
 
-
 void AWebSocketSenderActor::SendRandomMessage()
 {
 	if (!WebSocket.IsValid() || !WebSocket->IsConnected())
@@ -123,7 +106,7 @@ void AWebSocketSenderActor::SendRandomMessage()
 	// Example struct for testing CreateGameMessageFromStruct
 
 
-	FGameMessage MessageData = CreateGameMessage();
+	FGameMessage MessageData = this->CreateGameMessage();
 
 	TArray<uint8> PackedData = UMessagePackBlueprintLibrary::SerializeToMessagePack(MessageData);
 

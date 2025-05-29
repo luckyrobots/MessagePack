@@ -7,7 +7,8 @@ public class MessagePackModule : ModuleRules
 {
 	public MessagePackModule(ReadOnlyTargetRules Target) : base(Target)
 	{
-		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
+		PCHUsage = ModuleRules.PCHUsageMode.UseExplicitOrSharedPCHs;
+		bEnableExceptions = true; // Enable C++ exceptions for msgpack-c
 
 		// Set C++ standard to C++20
 		CppStandard = CppStandardVersion.Cpp20;
@@ -32,5 +33,13 @@ public class MessagePackModule : ModuleRules
 
 		// Tell msgpack-c to not use Boost
 		PublicDefinitions.Add("MSGPACK_NO_BOOST=1");
+
+		// Add /EHsc flag for MSVC compiler
+		if (Target.Platform == UnrealTargetPlatform.Win64)
+		{
+			// this.PublicAdditionalCompilerArguments += " /EHsc"; // Still causing issues
+			// PrivateDefinitions.Add("/EHsc"); // Incorrect attempt
+            // No fix for PublicAdditionalCompilerArguments yet, leaving blank for now
+		}
 	}
 }

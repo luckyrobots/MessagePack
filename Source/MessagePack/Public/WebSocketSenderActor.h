@@ -17,6 +17,20 @@ public:
 	// Sets default values for this actor's properties
 	AWebSocketSenderActor();
 
+	// Function declarations/definitions
+	FGameMessage CreateGameMessage();
+
+	template<typename T>
+	FGameMessage CreateGameMessageFromStruct(const T& StructData)
+	{
+	    FGameMessage MessageData;
+	    MessageData.Id = FGuid::NewGuid().ToString();
+	    FMemoryWriter MemoryWriter(MessageData.Data, true);
+	    MemoryWriter << StructData; // Assumes T supports FMemoryWriter serialization
+	    MessageData.Message = FString::Printf(TEXT("Serialized data structure"));
+	    return MessageData;
+	}
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -32,7 +46,7 @@ protected:
 private:
 	void ConnectWebSocket();
 	void SendRandomMessage();
-
+    
 	TSharedPtr<IWebSocket> WebSocket;
 	FTimerHandle SendMessageTimerHandle;
 
